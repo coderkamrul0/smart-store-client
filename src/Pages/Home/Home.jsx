@@ -1,4 +1,5 @@
 import MobileProducts from "./MobileProducts";
+import OfferSection from "./OfferSection";
 import Service from "./Service";
 import Slider from "./Slider";
 import SmartWatch from "./SmartWatch";
@@ -10,6 +11,7 @@ const Home = () => {
             <Service/>
             <MobileProducts/>
             <SmartWatch/>
+            <OfferSection/>
         </div>
     );
 };
