@@ -5,7 +5,7 @@ const Service = () => {
     return (
         <div>
             <div className='max-w-screen-xl mx-auto px-3 md:px-0 py-10 md:py-20'>
-                <div className="grid gap-5 grid-cols-2 md:grid-cols-4">
+                <div className="grid justify-between gap-5 grid-cols-2 md:grid-cols-4">
                     <div className="flex gap-3">
                         <FaShoppingCart className="text-[#72AEC8]" size={30}/>
                         <div>
