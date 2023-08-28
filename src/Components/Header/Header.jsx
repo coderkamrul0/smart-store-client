@@ -16,9 +16,9 @@ const Header = () => {
   return (
     <nav className="bg-black">
       <div className="max-w-screen-xl mx-auto">
-      <div className='md:flex items-center justify-between bg-black py-4'>
+      <div className='md:flex items-center justify-between bg-black py-4 px-3 md:px-0'>
       <div className='font-bold text-2xl cursor-pointer flex items-center 
-      text-white'>
+      text-white '>
         SmartStore.
       </div>
       
