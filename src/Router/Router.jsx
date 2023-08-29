@@ -7,6 +7,8 @@ import SingleProduct from "../Pages/SingleProduct/SingleProduct";
 import Cart from "../Pages/Cart/Cart";
 import CheckOut from "../Pages/CheckOut/CheckOut";
 import Contact from "../Pages/Contact/Contact";
+import Login from "../Pages/Login/Login";
+import Registration from "../Pages/Registration/Registration";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +42,14 @@ export const router = createBrowserRouter([
         {
             path: '/contact',
             element: <Contact/>
+        },
+        {
+            path: '/login',
+            element: <Login/>
+        },
+        {
+            path: '/register',
+            element: <Registration/>
         }
     ]
   },
