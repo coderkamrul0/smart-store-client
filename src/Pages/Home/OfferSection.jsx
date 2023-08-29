@@ -16,7 +16,7 @@ const OfferSection = () => {
               <div className="h-0.5 w-10 bg-black"></div>
               <p className="text-xl uppercase">10% off</p>
             </div>
-            <h2 className="uppercase text-7xl py-5">new year sale</h2>
+            <h2 className="uppercase text-5xl md:text-7xl py-5">new year sale</h2>
             <button className="bg-black text-white px-5 py-2 mt-5 border border-black hover:text-black hover:bg-transparent transition-all duration-150 delay-150">
               SHOP SALE
             </button>

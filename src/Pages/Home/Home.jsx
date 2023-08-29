@@ -1,3 +1,4 @@
+import LatestPost from "./LatestPost";
 import MobileProducts from "./MobileProducts";
 import OfferSection from "./OfferSection";
 import Service from "./Service";
@@ -12,6 +13,7 @@ const Home = () => {
             <MobileProducts/>
             <SmartWatch/>
             <OfferSection/>
+            <LatestPost/>
         </div>
     );
 };
