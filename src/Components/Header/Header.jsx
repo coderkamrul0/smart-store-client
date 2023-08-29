@@ -6,10 +6,10 @@ import { FaBars,FaUser,FaShoppingCart } from 'react-icons/fa';
 const Header = () => {
   let Links = [
     { name: "HOME", link: "/" },
-    { name: "SHOP", link: "/" },
-    { name: "ABOUT", link: "/" },
-    { name: "BLOG'S", link: "/" },
-    { name: "CONTACT", link: "/" },
+    { name: "SHOP", link: "/shop" },
+    { name: "ABOUT", link: "/about" },
+    { name: "BLOG'S", link: "/blogs" },
+    { name: "CONTACT", link: "/contact" },
   ];
   const [open, setOpen] = useState(false)
 
