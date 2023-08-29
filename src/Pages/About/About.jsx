@@ -1,3 +1,5 @@
+/* eslint-disable react/no-unescaped-entities */
+import { Helmet } from "react-helmet";
 import PageHeader from "../../Components/PageHeader/PageHeader";
 import Service from "../../Components/Services/Service";
 import ShopInstagram from "../../Components/ShopInstagram/ShopInstagram";
@@ -7,6 +9,9 @@ import aboutImg from "../../assets/aboutImg.png";
 const About = () => {
   return (
     <div>
+        <Helmet>
+        <title>SmartStore | About</title>
+      </Helmet>
       <PageHeader pageName={"About Us"} />
       <Service />
       <div className="pb-10">
