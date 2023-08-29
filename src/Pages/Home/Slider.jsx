@@ -1,5 +1,6 @@
-import watch from "../../assets/watch4.png";
-import phone from "../../assets/phone.png";
+import watch from "../../assets/b-watch.png";
+import phone from "../../assets/b-phone.png";
+import laptop from "../../assets/b-laptop.png";
 import { useEffect, useState } from "react";
 
 const data = [
@@ -15,6 +16,13 @@ const data = [
     heading:
       "New Smartwatch In Our Shop",
     image: watch,
+  },
+  {
+    id: 3,
+    subHeading: "CHECK YOUR BEST CHOICE",
+    heading:
+      "New Laptop In Our Shop",
+    image: laptop,
   },
 ];
 

@@ -4,7 +4,7 @@ import { FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 export default function ProfileDropdown() {
-  const user = false;
+  const user = true;
   const isAdmin = false;
   return (
     <div className="">

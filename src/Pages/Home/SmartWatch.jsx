@@ -78,7 +78,7 @@ const SmartWatch = () => {
                 <SwiperSlide key={product.id}>
                 <div className="flex flex-col gap-3 border py-10 relative group">
                   <div className="relative cursor-pointer transition-transform transform-gpu hover:scale-110">
-                    <img className="mx-auto" src={product.image} alt="" />
+                    <img className="mx-auto w-[70%]" src={product.image} alt="" />
                     <button className="items-center uppercase text-xs gap-2 text-white bg-black px-3 py-1 mx-20 absolute bottom-5 left-0 right-0 flex justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                       Add to cart <FaShoppingCart />
                     </button>

@@ -7,6 +7,7 @@ import ShopInstagram from "../../Components/ShopInstagram/ShopInstagram";
 import Slider from "./Slider";
 import SmartWatch from "./SmartWatch";
 import { Helmet } from "react-helmet";
+import Laptop from "./Laptop";
 
 const Home = () => {
   return (
@@ -18,6 +19,7 @@ const Home = () => {
       <Service />
       <MobileProducts />
       <SmartWatch />
+      <Laptop/>
       <OfferSection />
       <LatestPost />
       <Subscribe />
