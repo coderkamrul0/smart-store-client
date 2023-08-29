@@ -4,6 +4,7 @@ import OfferSection from "./OfferSection";
 import Service from "./Service";
 import Slider from "./Slider";
 import SmartWatch from "./SmartWatch";
+import Subscribe from "./Subscribe";
 
 const Home = () => {
     return (
@@ -14,6 +15,7 @@ const Home = () => {
             <SmartWatch/>
             <OfferSection/>
             <LatestPost/>
+            <Subscribe/>
         </div>
     );
 };
