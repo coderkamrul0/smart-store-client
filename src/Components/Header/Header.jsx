@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaBars,FaUser,FaShoppingCart } from 'react-icons/fa';
+import { Link } from "react-router-dom";
 
 
 
@@ -35,7 +36,7 @@ const Header = () => {
           ))
         }
         <div className="flex gap-3 md:ms-8 text-white">
-            <button className="flex items-center gap-1"><FaShoppingCart/>(0)</button>
+            <Link to={'/cart'}><button className="flex items-center gap-1"><FaShoppingCart/>(0)</button></Link>
             <button><FaUser/></button>
         </div>
       </ul>
