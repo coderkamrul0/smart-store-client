@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { FaBars,FaUser,FaShoppingCart } from 'react-icons/fa';
+import { FaBars,FaShoppingCart } from 'react-icons/fa';
 import { Link } from "react-router-dom";
+import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
 
 
 
@@ -35,9 +36,9 @@ const Header = () => {
             </li>
           ))
         }
-        <div className="flex gap-3 md:ms-8 text-white">
+        <div className="flex justify-end  gap-3 pe-5 md:pe-0 md:ms-8 text-white">
             <Link to={'/cart'}><button className="flex items-center gap-1"><FaShoppingCart/>(0)</button></Link>
-            <button><FaUser/></button>
+            <ProfileDropdown/>
         </div>
       </ul>
       </div>
