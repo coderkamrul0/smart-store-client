@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 export default function ProfileDropdown() {
   const user = true;
-  const isAdmin = false;
+  const isAdmin = true;
   return (
     <div className="">
       <Menu as="div" className="relative inline-block text-left">

@@ -1,5 +1,4 @@
 import { createBrowserRouter } from "react-router-dom";
-import App from "../App";
 import Home from "../Pages/Home/Home";
 import About from "../Pages/About/About";
 import Shop from "../Pages/Shop/Shop";
@@ -9,11 +8,14 @@ import CheckOut from "../Pages/CheckOut/CheckOut";
 import Contact from "../Pages/Contact/Contact";
 import Login from "../Pages/Login/Login";
 import Registration from "../Pages/Registration/Registration";
+import AdminLayout from "../Layout/AdminLayout";
+import AdminHome from "../Pages/AdminDashboard/AdminHome"
+import MainLayout from "../Layout/MainLayout";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>,
+    element: <MainLayout/>,
     children: [
         {
             path: '/',
@@ -53,4 +55,14 @@ export const router = createBrowserRouter([
         }
     ]
   },
+  {
+    path: '/dashboard',
+    element: <AdminLayout/>,
+    children: [
+        {
+            path: '/dashboard',
+            element: <AdminHome/>
+        }
+    ]
+  }
 ]);
