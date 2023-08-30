@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGoogle, FaFacebookF, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProviders";
@@ -7,7 +7,11 @@ import { AuthContext } from "../../Providers/AuthProviders";
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState('')
-  const {signIn} = useContext(AuthContext)
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/';
+
+  const {signIn,googleSignIn} = useContext(AuthContext)
   const togglePasswordVisibility = () => {
     setPasswordVisible((prevVisible) => !prevVisible);
   };
@@ -22,10 +26,33 @@ const Login = () => {
     .then(result => {
       const user = result.user;
       console.log(user);
+      navigate(from, {replace: true});
     })
     .catch(error => {
       setError("Enter correct email & password")
       console.log(error);
+    })
+  }
+
+
+  const handleGoogleLogin = () => {
+    googleSignIn()
+    .then(result => {
+      const loggedUser = result.user;
+      console.log(loggedUser);
+      const saveUser = { name: loggedUser.displayName, email: loggedUser.email, role: "Customer" };
+      fetch(`http://localhost:5000/users`, {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify(saveUser),
+            })
+              .then((res) => res.json())
+              .then(() => {
+                  navigate(from, { replace: true });
+                }
+              );
     })
   }
 
@@ -78,7 +105,7 @@ const Login = () => {
             </div>
             <div className="text-center py-3">- or -</div>
             <div className="flex gap-5">
-              <button className="bg-black text-white w-full flex items-center justify-center py-2 border border-black hover:bg-transparent hover:text-black transition-all duration-150 delay-150">
+              <button onClick={handleGoogleLogin} className="bg-black text-white w-full flex items-center justify-center py-2 border border-black hover:bg-transparent hover:text-black transition-all duration-150 delay-150">
                 <FaGoogle />
               </button>
               <button className="bg-black text-white w-full flex items-center justify-center py-2 border border-black hover:bg-transparent hover:text-black transition-all duration-150 delay-150">

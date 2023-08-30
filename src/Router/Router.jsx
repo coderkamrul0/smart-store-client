@@ -11,6 +11,7 @@ import Registration from "../Pages/Registration/Registration";
 import AdminLayout from "../Layout/AdminLayout";
 import AdminHome from "../Pages/AdminDashboard/AdminHome"
 import MainLayout from "../Layout/MainLayout";
+import PrivateRoute from "./PrivateRoute";
 
 export const router = createBrowserRouter([
   {
@@ -39,7 +40,7 @@ export const router = createBrowserRouter([
         },
         {
             path: '/checkout',
-            element: <CheckOut/>
+            element: <PrivateRoute><CheckOut/></PrivateRoute>
         },
         {
             path: '/contact',

@@ -1,11 +1,22 @@
 import { Menu, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, useContext } from "react";
 import { FaUser } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Providers/AuthProviders";
 
 export default function ProfileDropdown() {
-  const user = true;
-  const isAdmin = true;
+  const {user, logOut} = useContext(AuthContext);
+  const navigate = useNavigate()
+  const isAdmin = false;
+
+  // log out user
+  const handleLogOut = () => {
+    logOut()
+    .then(()=>{
+      navigate('/')
+    })
+  }
+
   return (
     <div className="">
       <Menu as="div" className="relative inline-block text-left">
@@ -43,7 +54,7 @@ export default function ProfileDropdown() {
                   <Menu.Item>
                     {({ active }) => (
                         <button
-                          
+                          onClick={handleLogOut}
                           className={`${
                             active ? "bg-black  text-white" : "text-gray-900"
                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
@@ -97,7 +108,7 @@ export default function ProfileDropdown() {
                   <Menu.Item>
                     {({ active }) => (
                         <button
-                          
+                        onClick={handleLogOut}
                           className={`${
                             active ? "bg-black  text-white" : "text-gray-900"
                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}

@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaGoogle, FaFacebookF, FaEye, FaEyeSlash } from "react-icons/fa";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProviders";
@@ -6,50 +6,96 @@ import { AuthContext } from "../../Providers/AuthProviders";
 const Registration = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-  const [error, setError] = useState('')
-  const {createUser} = useContext(AuthContext);
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
+  const { createUser, updateUserProfile,googleSignIn } = useContext(AuthContext);
   const togglePasswordVisibility = () => {
     setPasswordVisible((prevVisible) => !prevVisible);
   };
   const toggleConfirmPasswordVisibility = () => {
     setConfirmPasswordVisible((prevVisible) => !prevVisible);
   };
-  
+
   const handleRegister = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
     const email = e.target.email.value;
     const password = e.target.password.value;
     const confirmPassword = e.target.confirmPassword.value;
-  
+
     const validatePassword = (password) => {
       // At least 8 characters, with uppercase, lowercase, digit, and symbol
-      const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
+      const passwordPattern =
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
       return passwordPattern.test(password);
     };
-  
+
     if (!name) {
-      setError('Name is Required.');
+      setError("Name is Required.");
     } else if (!email) {
       setError("Email is Required.");
     } else if (password.length < 8) {
-      setError('Password must be at least 8 characters long.');
+      setError("Password must be at least 8 characters long.");
     } else if (!validatePassword(password)) {
-      setError('Password must contain uppercase, lowercase, digit, and symbol.');
+      setError(
+        "Password must contain uppercase, lowercase, digit, and symbol."
+      );
     } else if (password !== confirmPassword) {
       setError("Password not matched!");
     } else {
-      setError('');
-  
+      setError("");
+
       // sign up
-      createUser(email, password)
-        .then(result => {
-          const loggedUser = result.user;
-          console.log(loggedUser);
-        });
+      createUser(email, password).then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+        updateUserProfile(name)
+          .then(() => {
+            const saveUser = { name: name, email: email, role: "Customer" };
+            fetch(`http://localhost:5000/users`, {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify(saveUser),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.insertedId) {
+                  navigate(from, { replace: true });
+                }
+              });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      });
     }
   };
-  
+
+  const handleGoogleLogin = () => {
+    googleSignIn()
+    .then(result => {
+      const loggedUser = result.user;
+      console.log(loggedUser);
+      const saveUser = { name: loggedUser.displayName, email: loggedUser.email, role: "Customer" };
+      fetch(`http://localhost:5000/users`, {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify(saveUser),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                if (data.insertedId) {
+                  navigate(from, { replace: true });
+                }
+              });
+    })
+  }
 
   return (
     <div className="min-h-[60vh] bg-[#EDF1F3]">
@@ -128,7 +174,7 @@ const Registration = () => {
             </div>
             <div className="text-center py-3">- or -</div>
             <div className="flex gap-5">
-              <button className="bg-black text-white w-full flex items-center justify-center py-2 border border-black hover:bg-transparent hover:text-black transition-all duration-150 delay-150">
+              <button onClick={handleGoogleLogin} className="bg-black text-white w-full flex items-center justify-center py-2 border border-black hover:bg-transparent hover:text-black transition-all duration-150 delay-150">
                 <FaGoogle />
               </button>
               <button className="bg-black text-white w-full flex items-center justify-center py-2 border border-black hover:bg-transparent hover:text-black transition-all duration-150 delay-150">
