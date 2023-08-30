@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import { FaGoogle, FaFacebookF, FaEye, FaEyeSlash } from "react-icons/fa";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../Providers/AuthProviders";
 
 const Registration = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
   const [error, setError] = useState('')
+  const {createUser} = useContext(AuthContext);
   const togglePasswordVisibility = () => {
     setPasswordVisible((prevVisible) => !prevVisible);
   };
@@ -19,27 +21,35 @@ const Registration = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
     const confirmPassword = e.target.confirmPassword.value;
-    
+  
     const validatePassword = (password) => {
       // At least 8 characters, with uppercase, lowercase, digit, and symbol
       const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
       return passwordPattern.test(password);
     };
-
-    if(!name) {
-      setError('Name is Required.')
-    } else if(!email) {
-      setError("Email is Required")
-    }else if(!validatePassword(password)) {
-      setError('Password minimum 8 characters, with uppercase, lowercase, digit, and symbol')
-    }else if(validatePassword !== confirmPassword){
-      setError("Password not matched!")
+  
+    if (!name) {
+      setError('Name is Required.');
+    } else if (!email) {
+      setError("Email is Required.");
+    } else if (password.length < 8) {
+      setError('Password must be at least 8 characters long.');
+    } else if (!validatePassword(password)) {
+      setError('Password must contain uppercase, lowercase, digit, and symbol.');
+    } else if (password !== confirmPassword) {
+      setError("Password not matched!");
     } else {
-      setError('')
+      setError('');
+  
+      // sign up
+      createUser(email, password)
+        .then(result => {
+          const loggedUser = result.user;
+          console.log(loggedUser);
+        });
     }
-    
-
-  }
+  };
+  
 
   return (
     <div className="min-h-[60vh] bg-[#EDF1F3]">

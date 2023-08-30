@@ -1,13 +1,33 @@
+/* eslint-disable react/no-unescaped-entities */
 import { Link } from "react-router-dom";
 import { FaGoogle, FaFacebookF, FaEye, FaEyeSlash } from "react-icons/fa";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { AuthContext } from "../../Providers/AuthProviders";
 
 const Login = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
-
+  const [error, setError] = useState('')
+  const {signIn} = useContext(AuthContext)
   const togglePasswordVisibility = () => {
     setPasswordVisible((prevVisible) => !prevVisible);
   };
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    
+    // sign in
+    signIn(email,password)
+    .then(result => {
+      const user = result.user;
+      console.log(user);
+    })
+    .catch(error => {
+      setError("Enter correct email & password")
+      console.log(error);
+    })
+  }
 
   return (
     <div className="min-h-[60vh] bg-[#EDF1F3]">
@@ -18,7 +38,7 @@ const Login = () => {
           </h3>
         </div>
         <div className="flex justify-center items-center">
-          <form className="md:w-2/5">
+          <form onSubmit={handleLogin} className="md:w-2/5">
             <div className="mb-4">
               <label className="block text-sm text-black font-medium">
                 Email
@@ -47,6 +67,7 @@ const Login = () => {
                 </span>
               </div>
             </div>
+            <div className="text-red-800 text-center text-xs">{error}</div>
             <div>
               <button
                 type="submit"
