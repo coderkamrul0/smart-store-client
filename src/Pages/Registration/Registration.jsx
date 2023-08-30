@@ -5,13 +5,41 @@ import { useState } from "react";
 const Registration = () => {
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [confirmPasswordVisible, setConfirmPasswordVisible] = useState(false);
-
+  const [error, setError] = useState('')
   const togglePasswordVisibility = () => {
     setPasswordVisible((prevVisible) => !prevVisible);
   };
   const toggleConfirmPasswordVisibility = () => {
     setConfirmPasswordVisible((prevVisible) => !prevVisible);
   };
+  
+  const handleRegister = (e) => {
+    e.preventDefault();
+    const name = e.target.name.value;
+    const email = e.target.email.value;
+    const password = e.target.password.value;
+    const confirmPassword = e.target.confirmPassword.value;
+    
+    const validatePassword = (password) => {
+      // At least 8 characters, with uppercase, lowercase, digit, and symbol
+      const passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[\W_]).{8,}$/;
+      return passwordPattern.test(password);
+    };
+
+    if(!name) {
+      setError('Name is Required.')
+    } else if(!email) {
+      setError("Email is Required")
+    }else if(!validatePassword(password)) {
+      setError('Password minimum 8 characters, with uppercase, lowercase, digit, and symbol')
+    }else if(validatePassword !== confirmPassword){
+      setError("Password not matched!")
+    } else {
+      setError('')
+    }
+    
+
+  }
 
   return (
     <div className="min-h-[60vh] bg-[#EDF1F3]">
@@ -22,7 +50,7 @@ const Registration = () => {
           </h3>
         </div>
         <div className="flex justify-center items-center">
-          <form className="md:w-2/5">
+          <form onSubmit={handleRegister} className="md:w-2/5">
             <div className="mb-4 w-full">
               <label className="block text-sm text-black font-medium">
                 Full Name
@@ -79,6 +107,7 @@ const Registration = () => {
                 </span>
               </div>
             </div>
+            <div className="text-red-800 text-center text-xs">{error}</div>
             <div>
               <button
                 type="submit"

@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "@headlessui/react": "^1.7.17",
+    "@tanstack/react-query": "^4.33.0",
+    "axios": "^1.5.0",
     "firebase": "^10.3.0",
+    "jsonwebtoken": "^9.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-helmet": "^6.1.0",
