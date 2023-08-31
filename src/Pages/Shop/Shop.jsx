@@ -1,56 +1,59 @@
 import PageHeader from "../../Components/PageHeader/PageHeader";
 import ShopInstagram from "../../Components/ShopInstagram/ShopInstagram";
 import Subscribe from "../../Components/Subscribe/Subscribe";
-import { FaFilter, FaSearch, FaShoppingCart } from "react-icons/fa";
+import { FaEye, FaFilter, FaSearch, FaShoppingCart } from "react-icons/fa";
 import smartWatch from "../../assets/smartWatch.jpg";
 import phone from "../../assets/Apple-iPhone-14-Pro-Max.jpg";
 import { Helmet } from "react-helmet";
 import { useState } from "react";
+import useProducts from "../../hooks/useProducts";
+import { Link } from "react-router-dom";
 
 const Shop = () => {
   const [showFilters, setShowFilters] = useState(false);
+  const [products] = useProducts();
 
   const toggleFilterSection = () => {
     setShowFilters(!showFilters);
   };
-  const productData = [
-    {
-      id: 1,
-      name: "iPhone 14 Pro",
-      price: 1500,
-      image: smartWatch,
-    },
-    {
-      id: 1,
-      name: "iPhone 13 Pro",
-      price: 1500,
-      image: smartWatch,
-    },
-    {
-      id: 1,
-      name: "iPhone 14 Pro",
-      price: 1500,
-      image: smartWatch,
-    },
-    {
-      id: 1,
-      name: "iPhone 14 Pro",
-      price: 1500,
-      image: phone,
-    },
-    {
-      id: 1,
-      name: "iPhone 14 Pro",
-      price: 1500,
-      image: phone,
-    },
-    {
-      id: 1,
-      name: "iPhone 14 Pro",
-      price: 1500,
-      image: phone,
-    },
-  ];
+  // const productData = [
+  //   {
+  //     id: 1,
+  //     name: "iPhone 14 Pro",
+  //     price: 1500,
+  //     image: smartWatch,
+  //   },
+  //   {
+  //     id: 1,
+  //     name: "iPhone 13 Pro",
+  //     price: 1500,
+  //     image: smartWatch,
+  //   },
+  //   {
+  //     id: 1,
+  //     name: "iPhone 14 Pro",
+  //     price: 1500,
+  //     image: smartWatch,
+  //   },
+  //   {
+  //     id: 1,
+  //     name: "iPhone 14 Pro",
+  //     price: 1500,
+  //     image: phone,
+  //   },
+  //   {
+  //     id: 1,
+  //     name: "iPhone 14 Pro",
+  //     price: 1500,
+  //     image: phone,
+  //   },
+  //   {
+  //     id: 1,
+  //     name: "iPhone 14 Pro",
+  //     price: 1500,
+  //     image: phone,
+  //   },
+  // ];
   return (
     <div>
       <Helmet>
@@ -126,14 +129,21 @@ const Shop = () => {
             </div>
             <div className="md:w-5/6">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
-                {productData.map((product) => (
-                  <div key={product.id}>
+                {products.map((product) => (
+                  <div key={product._id}>
                     <div className="flex flex-col gap-3 border py-10 relative group">
                       <div className="relative cursor-pointer transition-transform transform-gpu hover:scale-110">
                         <img className="mx-auto" src={product.image} alt="" />
-                        <button className="items-center uppercase text-xs text-white bg-black px-3 py-1 mx-20 absolute bottom-5 left-0 right-0 flex justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+                        {/* <button className="items-center uppercase text-xs text-white bg-black px-3 py-1 mx-20 absolute bottom-5 left-0 right-0 flex justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
                           cart <FaShoppingCart />
-                        </button>
+                        </button> */}
+
+                        <div className="absolute bottom-20 left-0 right-0 flex justify-center items-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex-col gap-2">
+                          <Link to={`/products/${product._id}`}>
+                          <button className="flex text-xs border border-white items-center gap-1 bg-black text-white justify-center py-1 px-2 rounded max-w-[120px]">View Detail <FaEye/></button>
+                          </Link>
+                          <button className="flex text-xs border border-white items-center gap-1 bg-black text-white justify-center py-1 px-1 rounded max-w-[120px]">Add Cart <FaShoppingCart/></button>
+                        </div>
                       </div>
                       <div className="flex justify-around">
                         <p className="font-bold uppercase">{product.name}</p>

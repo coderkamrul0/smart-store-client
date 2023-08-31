@@ -1,22 +1,12 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment, useContext } from "react";
 import { FaUser } from "react-icons/fa";
-import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Providers/AuthProviders";
+import ProfileMenu from "../ProfileMenu/ProfileMenu";
+import { Link } from "react-router-dom";
 
 export default function ProfileDropdown() {
-  const {user, logOut} = useContext(AuthContext);
-  const navigate = useNavigate()
-  const isAdmin = false;
-
-  // log out user
-  const handleLogOut = () => {
-    logOut()
-    .then(()=>{
-      navigate('/')
-    })
-  }
-
+const {user} = useContext(AuthContext);
   return (
     <div className="">
       <Menu as="div" className="relative inline-block text-left">
@@ -35,120 +25,37 @@ export default function ProfileDropdown() {
           leaveTo="transform opacity-0 scale-95"
         >
           <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-          {user ? (
-              isAdmin ? (
+              {
+                user ? <ProfileMenu/> : <>
                 <div className="px-1 py-1 ">
                   <Menu.Item>
                     {({ active }) => (
-                      <Link to={"/dashboard"}>
+                      <Link to={"/login"}>
                         <button
                           className={`${
                             active ? "bg-black  text-white" : "text-gray-900"
                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                         >
-                          Admin Panel
+                          Login
                         </button>
                       </Link>
                     )}
                   </Menu.Item>
                   <Menu.Item>
                     {({ active }) => (
+                        <Link to={'/register'}>
                         <button
-                          onClick={handleLogOut}
                           className={`${
                             active ? "bg-black  text-white" : "text-gray-900"
                           } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                         >
-                          Logout
-                        </button>
+                          Register
+                        </button></Link>
                     )}
                   </Menu.Item>
                 </div>
-              ) : (
-                <div className="px-1 py-1 ">
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Link to={"/cart"}>
-                        <button
-                          className={`${
-                            active ? "bg-black  text-white" : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                        >
-                          My Account
-                        </button>
-                      </Link>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Link to={"/"}>
-                        <button
-                          className={`${
-                            active ? "bg-black  text-white" : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                        >
-                          My Orders
-                        </button>
-                      </Link>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                      <Link to={"/"}>
-                        <button
-                          className={`${
-                            active ? "bg-black  text-white" : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                        >
-                          My Carts
-                        </button>
-                      </Link>
-                    )}
-                  </Menu.Item>
-                  <Menu.Item>
-                    {({ active }) => (
-                        <button
-                        onClick={handleLogOut}
-                          className={`${
-                            active ? "bg-black  text-white" : "text-gray-900"
-                          } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                        >
-                          Logout
-                        </button>
-                    )}
-                  </Menu.Item>
-                </div>
-              )
-            ) : (
-              <div className="px-1 py-1 ">
-                <Menu.Item>
-                  {({ active }) => (
-                    <Link to={"/login"}>
-                      <button
-                        className={`${
-                          active ? "bg-black  text-white" : "text-gray-900"
-                        } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                      >
-                        Login
-                      </button>
-                    </Link>
-                  )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <Link to={"/register"}>
-                      <button
-                        className={`${
-                          active ? "bg-black  text-white" : "text-gray-900"
-                        } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
-                      >
-                        Register
-                      </button>
-                    </Link>
-                  )}
-                </Menu.Item>
-              </div>
-            )}
+                </>
+              }
           </Menu.Items>
         </Transition>
       </Menu>

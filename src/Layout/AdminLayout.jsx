@@ -33,7 +33,7 @@ const Dashboard = () => {
                     <Link className='hover:bg-[#7261E8] p-2 rounded-md' to={'/dashboard/allFoods'}><li className='flex items-center gap-1'><FaListAlt/>Products</li></Link>
                     <Link className='hover:bg-[#7261E8] p-2 rounded-md' to={'/dashboard/addFood'}><li className='flex items-center gap-1'><FaPlusSquare/>Add Products</li></Link>
                     <Link className='hover:bg-[#7261E8] p-2 rounded-md' to={'/dashboard/orderHistory'}><li className='flex items-center gap-1'><FaRegClipboard/>Orders</li></Link>
-                    <Link className='hover:bg-[#7261E8] p-2 rounded-md' to={'/dashboard/orderHistory'}><li className='flex items-center gap-1'><FaMoneyCheck/>Customers</li></Link>
+                    <Link className='hover:bg-[#7261E8] p-2 rounded-md' to={'/dashboard/customers'}><li className='flex items-center gap-1'><FaMoneyCheck/>Customers</li></Link>
                     <Link className='hover:bg-[#7261E8] p-2 rounded-md' to={'/dashboard/orderHistory'}><li className='flex items-center gap-1'><FaUsers/>Transactions</li></Link>
                     <br />
                     <Link className='hover:bg-[#7261E8] p-2 rounded-md' to={'/'}><li className='flex items-center gap-1'><FaHouseUser/>Main Home</li></Link>
