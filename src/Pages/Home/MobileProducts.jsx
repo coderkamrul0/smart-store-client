@@ -18,7 +18,7 @@ const MobileProducts = () => {
     <div>
       <div className="max-w-screen-xl mx-auto px-3 md:px-0 py-10">
         <div className="flex justify-between py-5 px-5 uppercase">
-        <h5 className="text-2xl font-semibold">Mobile Products</h5>
+        <h5 className="text-2xl font-semibold">Smartphones</h5>
         <Link className=" text-xs transition-all border border-black gap-1 py-1 px-2 rounded inline-flex items-center hover:bg-black hover:text-white hover:border-white" to={'/shop'}>Go to Shop <FaLongArrowAltRight/></Link>
         </div>
         <Swiper

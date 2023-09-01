@@ -4,10 +4,15 @@ import Subscribe from "../../Components/Subscribe/Subscribe";
 import useProducts from "../../hooks/useProducts";
 import { useCartContext} from "../../hooks/useCartContext";
 import { Link } from "react-router-dom";
+import { loadStripe } from "@stripe/stripe-js";
+
+
+
 const Cart = () => {
   
   const [products, loading] = useProducts();
   const { cartItems, increaseQuantity, decreaseQuantity, deleteItem } = useCartContext();
+  
 
   const calculateSubtotal = (product, quantity) => {
     return (product.price * quantity);
@@ -24,6 +29,62 @@ const Cart = () => {
     }
     return total;
   };
+
+
+  // payment data
+  const paymentProductData = Object.keys(cartItems).map((product_id) => {
+    const cartItem = cartItems[product_id];
+    const product = products.find((p) => p._id === product_id);
+  
+    if (!product) {
+      return null;
+    }
+  
+    return {
+      id: product._id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      quantity: cartItem,
+    };
+  }).filter((product) => product !== null);
+  
+  // console.log(paymentProductData);
+
+  // payment integration
+  const makePayment = async () => {
+    try {
+      const stripe = await loadStripe(import.meta.env.VITE_STRIPE);
+      const body = {
+        products: paymentProductData,
+      };
+      const headers = {
+        'Content-Type': 'application/json',
+      };
+      const response = await fetch('http://localhost:5000/api/create-checkout-session', {
+        method: 'POST',
+        headers: headers,
+        body: JSON.stringify(body),
+      });
+  
+      const session = await response.json();
+      console.log('Session:', session);
+
+  
+      const result = await stripe.redirectToCheckout({
+        sessionId: session.id, // Pass the sessionId obtained from the response
+      });
+  
+      if (result.error) {
+        console.log(result.error);
+      }
+    } catch (error) {
+      console.error('Error making payment:', error);
+    }
+  };
+
+
+
   return (
     <div>
       <PageHeader pageName={"Cart"} />
@@ -35,7 +96,7 @@ const Cart = () => {
                 <tr>
                   <th className="text-start">Product</th>
                   <th className="text-start">Quantity</th>
-                  <th className="text-start">Subtotal</th>
+                  <th className="text-start">Price</th>
                   <th></th>
                 </tr>
               </thead>
@@ -49,6 +110,7 @@ const Cart = () => {
                   Object.keys(cartItems).map((product_id) => {
                     const cartItem = cartItems[product_id];
                     const product = products.find((p) => p._id === product_id);
+                    
 
                     if (!product) {
                       return null; // Skip if product not found
@@ -101,7 +163,7 @@ const Cart = () => {
             <Link to="/shop">
             <button className="bg-black text-white px-5 py-2 mt-5 border border-black hover:text-black hover:bg-transparent transition-all duration-150 delay-150 uppercase">Continue shopping</button>
             </Link>
-            <button className="bg-black text-white px-5 py-2 mt-5 border border-black hover:text-black hover:bg-transparent transition-all duration-150 delay-150 uppercase">Proceed to checkout</button>
+            <button onClick={makePayment} type="button" className="bg-black text-white px-5 py-2 mt-5 border border-black hover:text-black hover:bg-transparent transition-all duration-150 delay-150 uppercase">Proceed to checkout</button>
           </div>
         </div>
       </div>

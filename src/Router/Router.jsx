@@ -13,6 +13,8 @@ import AdminHome from "../Pages/AdminDashboard/AdminHome"
 import MainLayout from "../Layout/MainLayout";
 import PrivateRoute from "./PrivateRoute";
 import Customers from "../Pages/AdminDashboard/Customers";
+import Success from "../Pages/Success";
+import Cancel from "../Pages/Cancel";
 
 export const router = createBrowserRouter([
   {
@@ -54,6 +56,14 @@ export const router = createBrowserRouter([
         {
             path: '/register',
             element: <Registration/>
+        },
+        {
+            path: '/success',
+            element: <Success/>
+        },
+        {
+            path: '/cancel',
+            element: <Cancel/>
         }
     ]
   },
