@@ -1,5 +1,11 @@
 import { useState } from "react";
-import { FaEye, FaFilter, FaSearch, FaShoppingCart } from "react-icons/fa";
+import {
+  FaFilter,
+  FaRegEye,
+  FaSearch,
+  FaShoppingCart,
+  FaStar,
+} from "react-icons/fa";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import useProducts from "../../hooks/useProducts";
@@ -13,7 +19,7 @@ const checkPriceRange = (price, selectedPriceRanges) => {
     return true;
   }
 
-  const selectedRanges = selectedPriceRanges.map(range => {
+  const selectedRanges = selectedPriceRanges.map((range) => {
     if (range === "Less than 500") return price < 500;
     if (range === "$501 - $1000") return price >= 501 && price <= 1000;
     if (range === "$1001 - $2000") return price >= 1001 && price <= 2000;
@@ -22,7 +28,7 @@ const checkPriceRange = (price, selectedPriceRanges) => {
     return false;
   });
 
-  return selectedRanges.some(match => match);
+  return selectedRanges.some((match) => match);
 };
 
 const Shop = () => {
@@ -32,14 +38,18 @@ const Shop = () => {
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
   const [products] = useProducts();
-  const {addToCart} = useCartContext();
-
+  const { addToCart } = useCartContext();
 
   // all filter function start-------------------------------------------------------
   const filteredProducts = products.filter((product) => {
-    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(product.category);
-    const matchesBrand = selectedBrands.length === 0 || selectedBrands.includes(product.brand);
+    const matchesSearch = product.name
+      .toLowerCase()
+      .includes(searchQuery.toLowerCase());
+    const matchesCategory =
+      selectedCategories.length === 0 ||
+      selectedCategories.includes(product.category);
+    const matchesBrand =
+      selectedBrands.length === 0 || selectedBrands.includes(product.brand);
     const matchesPrice = checkPriceRange(product.price, selectedPriceRanges);
 
     return matchesSearch && matchesCategory && matchesBrand && matchesPrice;
@@ -58,7 +68,9 @@ const Shop = () => {
 
   const handleCategoryFilter = (category) => {
     if (selectedCategories.includes(category)) {
-      setSelectedCategories(selectedCategories.filter(cat => cat !== category));
+      setSelectedCategories(
+        selectedCategories.filter((cat) => cat !== category)
+      );
     } else {
       setSelectedCategories([...selectedCategories, category]);
     }
@@ -66,7 +78,7 @@ const Shop = () => {
 
   const handleBrandFilter = (brand) => {
     if (selectedBrands.includes(brand)) {
-      setSelectedBrands(selectedBrands.filter(b => b !== brand));
+      setSelectedBrands(selectedBrands.filter((b) => b !== brand));
     } else {
       setSelectedBrands([...selectedBrands, brand]);
     }
@@ -74,13 +86,12 @@ const Shop = () => {
 
   const handlePriceRangeFilter = (range) => {
     if (selectedPriceRanges.includes(range)) {
-      setSelectedPriceRanges(selectedPriceRanges.filter(r => r !== range));
+      setSelectedPriceRanges(selectedPriceRanges.filter((r) => r !== range));
     } else {
       setSelectedPriceRanges([...selectedPriceRanges, range]);
     }
   };
   // all filter function end-------------------------------------------------------
-
 
   return (
     <div>
@@ -120,7 +131,9 @@ const Shop = () => {
                 }`}
               >
                 <div>
-                  <h5 className="uppercase underline font-semibold">Categories</h5>
+                  <h5 className="uppercase underline font-semibold">
+                    Categories
+                  </h5>
                   <div className="flex flex-col">
                     <ul>
                       <li>
@@ -147,12 +160,13 @@ const Shop = () => {
                         />
                         Laptops
                       </li>
-                      
                     </ul>
                   </div>
                 </div>
                 <div>
-                  <h5 className="uppercase underline font-semibold pt-3">Brand</h5>
+                  <h5 className="uppercase underline font-semibold pt-3">
+                    Brand
+                  </h5>
                   <div className="flex flex-col">
                     <ul>
                       <li>
@@ -179,19 +193,24 @@ const Shop = () => {
                         />
                         Vivo
                       </li>
-                      
                     </ul>
                   </div>
                 </div>
                 <div>
-                  <h5 className="uppercase underline font-semibold pt-3">Filter by Price</h5>
+                  <h5 className="uppercase underline font-semibold pt-3">
+                    Filter by Price
+                  </h5>
                   <div className="flex flex-col">
                     <ul>
                       <li>
                         <input
                           type="checkbox"
-                          checked={selectedPriceRanges.includes("Less than 500")}
-                          onChange={() => handlePriceRangeFilter("Less than 500")}
+                          checked={selectedPriceRanges.includes(
+                            "Less than 500"
+                          )}
+                          onChange={() =>
+                            handlePriceRangeFilter("Less than 500")
+                          }
                         />
                         Less than 500
                       </li>
@@ -199,33 +218,45 @@ const Shop = () => {
                         <input
                           type="checkbox"
                           checked={selectedPriceRanges.includes("$501 - $1000")}
-                          onChange={() => handlePriceRangeFilter("$501 - $1000")}
+                          onChange={() =>
+                            handlePriceRangeFilter("$501 - $1000")
+                          }
                         />
                         $501 - $1000
                       </li>
                       <li>
                         <input
                           type="checkbox"
-                          checked={selectedPriceRanges.includes("$1001 - $2000")}
-                          onChange={() => handlePriceRangeFilter("$1001 - $2000")}
+                          checked={selectedPriceRanges.includes(
+                            "$1001 - $2000"
+                          )}
+                          onChange={() =>
+                            handlePriceRangeFilter("$1001 - $2000")
+                          }
                         />
                         $1001 - $2000
                       </li>
                       <li>
                         <input
                           type="checkbox"
-                          checked={selectedPriceRanges.includes("$2001 - $3000")}
-                          onChange={() => handlePriceRangeFilter("$2001 - $3000")}
+                          checked={selectedPriceRanges.includes(
+                            "$2001 - $3000"
+                          )}
+                          onChange={() =>
+                            handlePriceRangeFilter("$2001 - $3000")
+                          }
                         />
                         $2001 - $3000
                       </li>
-                      
                     </ul>
                   </div>
                 </div>
                 <div>
                   <div className="flex flex-col gap-2">
-                    <button className="text-xs bg-gray-300 px-2 py-1 rounded" onClick={resetFilters}>
+                    <button
+                      className="text-xs bg-gray-300 px-2 py-1 rounded"
+                      onClick={resetFilters}
+                    >
                       Reset Filters
                     </button>
                   </div>
@@ -237,21 +268,51 @@ const Shop = () => {
                 {filteredProducts.length > 0 ? (
                   filteredProducts.map((product) => (
                     <div key={product._id}>
-                      <div className="flex flex-col gap-3 border py-10 relative group">
-                        <div className="relative cursor-pointer transition-transform transform-gpu hover:scale-110">
-                          <img className="mx-auto" src={product.image} alt="" />
-                          <div className="absolute bottom-20 left-0 right-0 flex justify-center items-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 flex-col gap-2">
+                      <div className="flex flex-col rounded relative group shadow-[0_8px_30px_rgb(0,0,0,0.12)]">
+                        <div className="relative pt-3 pb-3 ">
+                          <img
+                            className="mx-auto w-[80%]"
+                            src={product.image}
+                            alt=""
+                          />
+                          <div className="absolute bottom-16 right-2 gap-2 flex flex-col  justify-center items-center opacity-0 transition-opacity duration-300 group-hover:opacity-100 z-10">
                             <Link to={`/products/${product._id}`}>
-                              <button className="flex text-xs border border-white items-center gap-1 bg-black text-white justify-center py-1 px-2 rounded max-w-[120px]">View Detail <FaEye/></button>
+                              <button className="flex text-xs border  items-center gap-1 bg-white text-slate-600 hover:bg-black hover:text-white justify-center w-8 h-8 rounded-full">
+                                <FaRegEye size={16} />
+                              </button>
                             </Link>
-                            <button onClick={()=>addToCart(product._id)}  className="flex text-xs border border-white items-center gap-1 bg-black text-white justify-center py-1 px-1 rounded max-w-[120px]">Add Cart <FaShoppingCart/></button>
+                            <button
+                              onClick={() => addToCart(product._id)}
+                              className="flex text-xs border  items-center gap-1 bg-white text-slate-600 hover:bg-black hover:text-white justify-center w-8 h-8 rounded-full"
+                            >
+                              <FaShoppingCart size={16} />
+                            </button>
                           </div>
+                          <div className="absolute inset-0 bg-black opacity-0 transition-opacity duration-500 group-hover:opacity-20 pointer-events-none"></div>
                         </div>
-                        <div className="flex justify-around">
-                          <p className="font-bold uppercase">{product.name}</p>
-                          <p className="text-[#72AEC8] font-bold">
-                            ${product.price}
-                          </p>
+
+                        <div className=" border-t-2  px-2 py-3">
+                          <div className="flex justify-between items-center pb-1">
+                            <Link
+                              to={`/products/${product._id}`}
+                              className="hover:underline"
+                            >
+                              <p className="font-bold text-xs uppercase">
+                                {product.name}
+                              </p>
+                            </Link>
+                            <p className="text-[#48a7cf] font-bold">
+                              ${product.price}
+                            </p>
+                          </div>
+                          <div className="flex justify-between items-center">
+                            <p className="font-bold text-xs uppercase">
+                              Brand: {product.brand}
+                            </p>
+                            <p className="font-bold text-xs uppercase flex items-center gap-1">
+                              <FaStar /> {product.rating}
+                            </p>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -273,4 +334,3 @@ const Shop = () => {
 };
 
 export default Shop;
-
