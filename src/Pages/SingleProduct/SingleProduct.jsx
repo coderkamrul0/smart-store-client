@@ -1,6 +1,4 @@
 import { FaEye, FaStar } from "react-icons/fa";
-import iphone from "../../assets/Apple-iPhone-14-Pro-Max.jpg";
-import iPhone14promax from '../../assets/Apple-iPhone-14-Pro-Max.jpg'
 import { Swiper, SwiperSlide } from "swiper/react";
 // Import Swiper styles
 import "swiper/css";
@@ -14,9 +12,12 @@ import Subscribe from "../../Components/Subscribe/Subscribe";
 import ShopInstagram from "../../Components/ShopInstagram/ShopInstagram";
 import { useEffect, useState } from "react";
 import useProducts from "../../hooks/useProducts";
+import { useCartContext } from "../../hooks/useCartContext";
 const SingleProduct = () => {
   const [products] = useProducts();
   const [product,setProduct] = useState();
+  const [quantity, setQuantity] = useState(1);
+
   const {id} = useParams();
   useEffect(()=>{
     fetch(`http://localhost:5000/products/${id}`)
@@ -26,59 +27,25 @@ const SingleProduct = () => {
     })
   },[id])
   const relatedData = products.filter(item => item?.category === product?.category)
-  console.log(product);
-  // const product = [
-  //   {
-  //     id: 1,
-  //     name: "iPhone 14 pro max",
-  //     image: iphone,
-  //     price: 1300,
-  //     rating: "5.0",
-  //     stock: 5,
-  //     category: "phone",
-  //     brand: "Apple",
-  //     description:
-  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur nemo eligendi possimus. Natus cum sequi sunt cumque consequatur eveniet impedit expedita unde, delectus aliquid, quod incidunt enim nisi maiores excepturi quidem nam tempore totam doloremque at esse quia veniam dignissimos! Adipisci cupiditate, doloribus neque repudiandae natus quibusdam inventore magni, in incidunt quia iure. Eius eligendi exercitationem sapiente consectetur, voluptatum ab voluptatibus aliquam nulla beatae rerum fugit repellendus quia veniam corporis ipsam quae vero nesciunt cum perferendis deleniti odio in dolore tenetur saepe? Rem, repellat quisquam. Soluta, dolores in unde praesentium blanditiis nemo illo beatae consequatur veritatis! Nisi delectus exercitationem ipsam",
-  //   },
-  // ];
-  const mobileData = [
-    {
-      id: 1,
-      name: "iPhone 14 Pro",
-      price: 1500,
-      image: iPhone14promax,
-    },
-    {
-      id: 2,
-      name: "iPhone 13 Pro",
-      price: 1500,
-      image: iPhone14promax,
-    },
-    {
-      id: 3,
-      name: "iPhone 14 Pro",
-      price: 1500,
-      image: iPhone14promax,
-    },
-    {
-      id: 4,
-      name: "iPhone 14 Pro",
-      price: 1500,
-      image: iPhone14promax,
-    },
-    {
-      id: 5,
-      name: "iPhone 14 Pro",
-      price: 1500,
-      image: iPhone14promax,
-    },
-    {
-      id: 6,
-      name: "iPhone 14 Pro",
-      price: 1500,
-      image: iPhone14promax,
-    },
-  ];
+  const {addItemToCart} = useCartContext();
+
+  const handleIncrement = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const handleDecrement = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+  const handleAddToCart = () => {
+    if (product) {
+      addItemToCart(product._id, quantity);
+    }
+  };
+
+  
+  
   return (
     <div>
       <div className="max-w-screen-xl mx-auto px-3 md:px-0">
@@ -96,16 +63,15 @@ const SingleProduct = () => {
             <h3 className="text-3xl font-bold text-[#72AEC8]">
               ${product?.price}
             </h3>
-            {/* <p>{product.details}</p> */}
             <p>{product?.stock} in stock</p>
             <div className="flex gap-5">
-              <button className="w-10 flex items-center justify-center text-2xl shadow-[0_8px_30px_rgb(0,0,0,0.20)] border">
+              <button onClick={handleDecrement} className="w-10 flex items-center justify-center text-2xl shadow-[0_8px_30px_rgb(0,0,0,0.20)] border">
                 -
               </button>
               <div className="w-20 flex items-center justify-center text-2xl shadow-[0_8px_30px_rgb(0,0,0,0.20)] border">
-                {1}
+                {quantity}
               </div>
-              <button className="w-10 flex items-center justify-center text-2xl shadow-[0_8px_30px_rgb(0,0,0,0.20)] border">
+              <button onClick={handleIncrement} className="w-10 flex items-center justify-center text-2xl shadow-[0_8px_30px_rgb(0,0,0,0.20)] border">
                 +
               </button>
             </div>
@@ -113,7 +79,7 @@ const SingleProduct = () => {
               <button className="bg-[#72AEC8] text-white px-5 py-2 mt-5 border border-[#72AEC8] hover:text-black hover:bg-transparent transition-all duration-150 delay-150">
                 BUY NOW
               </button>
-              <button className="bg-black text-white px-5 py-2 mt-5 border border-black hover:text-black hover:bg-transparent transition-all duration-150 delay-150">
+              <button onClick={handleAddToCart} className="bg-black text-white px-5 py-2 mt-5 border border-black hover:text-black hover:bg-transparent transition-all duration-150 delay-150">
                 ADD TO CART
               </button>
             </div>

@@ -6,6 +6,7 @@ import useProducts from "../../hooks/useProducts";
 import PageHeader from "../../Components/PageHeader/PageHeader";
 import ShopInstagram from "../../Components/ShopInstagram/ShopInstagram";
 import Subscribe from "../../Components/Subscribe/Subscribe";
+import { useCartContext } from "../../hooks/useCartContext";
 
 const checkPriceRange = (price, selectedPriceRanges) => {
   if (!selectedPriceRanges.length) {
@@ -31,7 +32,10 @@ const Shop = () => {
   const [selectedBrands, setSelectedBrands] = useState([]);
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
   const [products] = useProducts();
+  const {addToCart} = useCartContext();
 
+
+  // all filter function start-------------------------------------------------------
   const filteredProducts = products.filter((product) => {
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
     const matchesCategory = selectedCategories.length === 0 || selectedCategories.includes(product.category);
@@ -75,6 +79,8 @@ const Shop = () => {
       setSelectedPriceRanges([...selectedPriceRanges, range]);
     }
   };
+  // all filter function end-------------------------------------------------------
+
 
   return (
     <div>
@@ -238,7 +244,7 @@ const Shop = () => {
                             <Link to={`/products/${product._id}`}>
                               <button className="flex text-xs border border-white items-center gap-1 bg-black text-white justify-center py-1 px-2 rounded max-w-[120px]">View Detail <FaEye/></button>
                             </Link>
-                            <button className="flex text-xs border border-white items-center gap-1 bg-black text-white justify-center py-1 px-1 rounded max-w-[120px]">Add Cart <FaShoppingCart/></button>
+                            <button onClick={()=>addToCart(product._id)}  className="flex text-xs border border-white items-center gap-1 bg-black text-white justify-center py-1 px-1 rounded max-w-[120px]">Add Cart <FaShoppingCart/></button>
                           </div>
                         </div>
                         <div className="flex justify-around">

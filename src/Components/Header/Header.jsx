@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FaBars,FaShoppingCart } from 'react-icons/fa';
 import { Link } from "react-router-dom";
 import ProfileDropdown from "../ProfileDropdown/ProfileDropdown";
+import { useCartContext } from "../../hooks/useCartContext";
 
 
 
@@ -14,6 +15,7 @@ const Header = () => {
     { name: "CONTACT", link: "/contact" },
   ];
   const [open, setOpen] = useState(false)
+  const {cartItemCount} = useCartContext();
 
   return (
     <nav className="bg-black">
@@ -37,7 +39,7 @@ const Header = () => {
           ))
         }
         <div className="flex justify-end  gap-3 pe-5 md:pe-0 md:ms-8 text-white">
-            <Link to={'/cart'}><button className="flex items-center gap-1"><FaShoppingCart/>(0)</button></Link>
+            <Link to={'/cart'}><button className="flex items-center gap-1"><FaShoppingCart/>{cartItemCount}</button></Link>
             <ProfileDropdown/>
         </div>
       </ul>
